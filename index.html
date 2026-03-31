@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Gustavo Bostelman — Nutrição de Elite</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --charcoal: #1A1A1A;
+    --sage: #7C9070;
+    --sage-light: #A8BE9B;
+    --gold: #C4A962;
+    --gold-dim: #8A7340;
+    --mist: #E8EDE5;
+    --white: #FDFCFA;
+    --glass: rgba(245,240,232,0.06);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--charcoal);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(196,169,98,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    background: linear-gradient(to bottom, rgba(26,26,26,0.95), transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 44px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: rgba(245,240,232,0.6);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--charcoal) !important;
+    background: var(--gold);
+    padding: 10px 24px;
+    border-radius: 2px;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold-dim); color: var(--cream) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 60px 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 75% 50%, rgba(124,144,112,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 20% 80%, rgba(196,169,98,0.07) 0%, transparent 60%),
+      linear-gradient(135deg, #111 0%, #1A1A1A 50%, #151b13 100%);
+  }
+.hero-image-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(26,26,26,0.8) 100%);
+  pointer-events: none;
+}
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* Large decorative circle */
+  .hero-circle {
+    position: absolute;
+    right: -160px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 680px;
+    height: 680px;
+    border-radius: 50%;
+    border: 1px solid rgba(124,144,112,0.18);
+    animation: rotateCircle 30s linear infinite;
+  }
+  .hero-circle::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(196,169,98,0.1);
+  }
+  .hero-circle::after {
+    content: '';
+    position: absolute;
+    inset: 100px;
+    border-radius: 50%;
+    border: 1px solid rgba(124,144,112,0.08);
+  }
+  @keyframes rotateCircle {
+    to { transform: translateY(-50%) rotate(360deg); }
+  }
+
+  /* Photo frame */
+  .hero-image-frame {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 420px;
+    height: 560px;
+    opacity: 0;
+    animation: fadeInRight 1.2s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+  }
+  .hero-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, rgba(124,144,112,0.15) 0%, rgba(26,26,26,0.8) 100%);
+    border: 1px solid rgba(196,169,98,0.2);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(245,240,232,0.2);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(26,26,26,0.8) 100%);
+  }
+  .photo-icon {
+    font-size: 48px;
+    opacity: 0.15;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 580px;
+    opacity: 0;
+    animation: fadeInUp 1.2s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .eyebrow-text {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7vw, 88px);
+    font-weight: 300;
+    line-height: 1.0;
+    margin-bottom: 32px;
+    color: var(--cream);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--sage-light);
+    display: block;
+  }
+  .hero-title .gold-word { color: var(--gold); }
+
+  .hero-description {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.55);
+    max-width: 420px;
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: var(--gold);
+    color: var(--charcoal);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--sage);
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { color: var(--cream); }
+  .btn-primary span { position: relative; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(245,240,232,0.6);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    border-bottom: 1px solid transparent;
+  }
+  .btn-ghost:hover { color: var(--cream); border-bottom-color: rgba(245,240,232,0.3); }
+  .btn-arrow { transition: transform 0.3s; }
+  .btn-ghost:hover .btn-arrow { transform: translateX(6px); }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: rgba(245,240,232,0.3);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(245,240,232,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gold);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    to { left: 100%; }
+  }
+
+  /* Stats strip */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(245,240,232,0.06);
+    border-bottom: 1px solid rgba(245,240,232,0.06);
+  }
+  .stat-item {
+    padding: 52px 60px;
+    border-right: 1px solid rgba(245,240,232,0.06);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+
+  /* MANIFESTO */
+  .manifesto {
+    padding: 160px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 120px;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .manifesto-label {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    justify-self: end;
+  }
+  .manifesto-content {}
+  .manifesto-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 300;
+    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 40px;
+  }
+  .manifesto-quote em { font-style: italic; color: var(--sage-light); }
+  .manifesto-body {
+    font-size: 15px;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.5);
+    max-width: 520px;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 40px 0 160px;
+  }
+  .services-header {
+    padding: 0 60px;
+    margin-bottom: 80px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .section-eyebrow-line {
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .section-eyebrow-text {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+  }
+  .section-title em { font-style: italic; color: var(--sage-light); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(245,240,232,0.06);
+  }
+
+  .service-card {
+    padding: 64px 56px;
+    border-right: 1px solid rgba(245,240,232,0.06);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.5s;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1), background 0.5s;
+  }
+  .service-card.visible { opacity: 1; transform: translateY(0); }
+  .service-card:last-child { border-right: none; }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,144,112,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-card:hover { background: rgba(255,255,255,0.02); }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: rgba(196,169,98,0.12);
+    line-height: 1;
+    margin-bottom: -16px;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-number { color: rgba(196,169,98,0.22); }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .service-icon svg { width: 32px; height: 32px; }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.45);
+    margin-bottom: 36px;
+  }
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+  .service-link:hover { gap: 16px; }
+
+  /* APPROACH */
+  .approach {
+    padding: 160px 60px;
+    background: linear-gradient(180deg, transparent 0%, rgba(124,144,112,0.04) 50%, transparent 100%);
+  }
+  .approach-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .approach-header {
+    margin-bottom: 100px;
+    max-width: 540px;
+  }
+  .approach-steps {
+    display: grid;
+    gap: 0;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 48px;
+    align-items: start;
+    padding: 48px 0;
+    border-bottom: 1px solid rgba(245,240,232,0.06);
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+  }
+  .step.visible { opacity: 1; transform: translateX(0); }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    padding-top: 6px;
+  }
+  .step-content {}
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .step-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.45);
+    max-width: 480px;
+  }
+  .step-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    background: rgba(124,144,112,0.12);
+    padding: 6px 14px;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 6px;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    padding: 160px 60px;
+    overflow: hidden;
+  }
+  .testimonials-header {
+    margin-bottom: 80px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .testimonials-track {
+    display: flex;
+    gap: 32px;
+    animation: scrollTestimonials 30s linear infinite;
+    width: max-content;
+  }
+  .testimonials-track:hover { animation-play-state: paused; }
+
+  @keyframes scrollTestimonials {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .testimonial-card {
+    width: 380px;
+    flex-shrink: 0;
+    padding: 48px;
+    border: 1px solid rgba(245,240,232,0.08);
+    border-radius: 4px;
+    background: rgba(245,240,232,0.02);
+    position: relative;
+  }
+  .testimonial-quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: rgba(196,169,98,0.2);
+    line-height: 0.8;
+    margin-bottom: 20px;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--cream);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--charcoal);
+    font-weight: 600;
+  }
+  .author-info {}
+  .author-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+  }
+  .author-role {
+    font-size: 11px;
+    color: rgba(245,240,232,0.4);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+  .stars {
+    position: absolute;
+    top: 48px;
+    right: 48px;
+    display: flex;
+    gap: 3px;
+  }
+  .star { color: var(--gold); font-size: 10px; }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 0 60px 160px;
+  }
+  .cta-inner {
+    background: linear-gradient(135deg, rgba(124,144,112,0.1) 0%, rgba(196,169,98,0.06) 100%);
+    border: 1px solid rgba(196,169,98,0.15);
+    border-radius: 8px;
+    padding: 120px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-inner::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(196,169,98,0.08);
+  }
+  .cta-inner::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(124,144,112,0.08);
+  }
+  .cta-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .cta-eyebrow-line { width: 40px; height: 1px; background: var(--gold); }
+  .cta-eyebrow-text {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 24px;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-title em { font-style: italic; color: var(--sage-light); }
+  .cta-sub {
+    font-size: 16px;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 60px;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px;
+    border-top: 1px solid rgba(245,240,232,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.35);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(245,240,232,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(60px) translateY(-50%); }
+    to { opacity: 1; transform: translateX(0) translateY(-50%); }
+  }
+
+  /* Floating particles */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float var(--duration, 8s) ease-in-out var(--delay, 0s) infinite;
+  }
+  @keyframes float {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
+    20% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+    80% { opacity: 0.3; transform: translateY(-80px) scale(0.5); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Dr. <span>Bostelman</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#contato" class="nav-cta">Consulta</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-circle"></div>
+
+  <div class="particles">
+    <div class="particle" style="left:15%;top:40%;--duration:7s;--delay:0s"></div>
+    <div class="particle" style="left:25%;top:65%;--duration:9s;--delay:1.5s"></div>
+    <div class="particle" style="left:40%;top:55%;--duration:6s;--delay:0.8s"></div>
+    <div class="particle" style="left:8%;top:75%;--duration:11s;--delay:2s"></div>
+    <div class="particle" style="left:50%;top:80%;--duration:8s;--delay:3s"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Nutrição Clínica de Precisão</span>
+    </div>
+
+    <h1 class="hero-title">
+      A ciência<br>
+      <em>que transforma</em><br>
+      sua <span class="gold-word">vida.</span>
+    </h1>
+
+    <p class="hero-description">
+      Dr. Gustavo Bostelman combina ciência de ponta com uma visão profunda do seu organismo para criar protocolos únicos — feitos exclusivamente para você.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contato" class="btn-primary">
+        <span>Agendar Consulta</span>
+        <span>→</span>
+      </a>
+      <a href="#metodo" class="btn-ghost">
+        Conhecer o Método
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Photo placeholder -->
+  <div class="hero-image-frame">
+  <img src="imgs/ggbom.png" alt="Foto do Dr. Gustavo">
+</div>
+
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-number">2.4<small style="font-size:28px">k+</small></div>
+    <div class="stat-label">Pacientes Transformados</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">12</div>
+    <div class="stat-label">Anos de Experiência</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">98<small style="font-size:28px">%</small></div>
+    <div class="stat-label">Índice de Satisfação</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Especializações em Nutrição</div>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-label">— Nossa Filosofia</div>
+  <div class="manifesto-content">
+    <blockquote class="manifesto-quote">
+      "Nutrição não é restrição.<br>
+      É o ato de <em>nutrir</em> cada célula<br>
+      do que você verdadeiramente é."
+    </blockquote>
+    <p class="manifesto-body">
+      Cada protocolo nutricional que desenvolvemos parte de uma análise profunda e individual. Usamos biomarcadores, histórico clínico e as mais recentes evidências científicas para criar um plano que funciona especificamente para o seu metabolismo — não para uma média estatística.
+    </p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicos">
+  <div class="services-header">
+    <div>
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <span class="section-eyebrow-text">O Que Oferecemos</span>
+      </div>
+      <h2 class="section-title">Especialidades<br><em>clínicas</em></h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#7C9070" stroke-width="1.2" stroke-linecap="round">
+          <path d="M16 4C9.4 4 4 9.4 4 16s5.4 12 12 12 12-5.4 12-12S22.6 4 16 4z"/>
+          <path d="M16 10v6l4 2"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Nutrição Clínica</h3>
+      <p class="service-desc">Avaliação completa com exames laboratoriais e construção de protocolo personalizado baseado em evidências científicas.</p>
+      <a href="#" class="service-link">Saiba mais <span>→</span></a>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#7C9070" stroke-width="1.2" stroke-linecap="round">
+          <path d="M8 16h16M16 8v16M6 6l20 20M26 6L6 26" opacity="0.3"/>
+          <path d="M16 6l3 5-3-1-3 1 3-5zM16 26l3-5-3 1-3-1 3 5z"/>
+          <circle cx="16" cy="16" r="4"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Emagrecimento</h3>
+      <p class="service-desc">Estratégias metabólicas inteligentes que respeitam seu corpo. Sem dietas extremas, com resultados que permanecem.</p>
+      <a href="#" class="service-link">Saiba mais <span>→</span></a>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#7C9070" stroke-width="1.2" stroke-linecap="round">
+          <path d="M12 20s0-8 4-8 4 8 4 8"/>
+          <path d="M8 14c0-4.4 3.6-8 8-8s8 3.6 8 8v4c0 3.3-2.7 6-6 6h-4c-3.3 0-6-2.7-6-6v-4z"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Nutrição Esportiva</h3>
+      <p class="service-desc">Periodização nutricional para atletas e praticantes. Maximize desempenho, recuperação e composição corporal.</p>
+      <a href="#" class="service-link">Saiba mais <span>→</span></a>
+    </div>
+    <div class="service-card" style="border-top: 1px solid rgba(245,240,232,0.06);">
+      <div class="service-number">04</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#7C9070" stroke-width="1.2" stroke-linecap="round">
+          <path d="M16 4l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/>
+          <circle cx="16" cy="16" r="11"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Nutrição Funcional</h3>
+      <p class="service-desc">Abordagem integrativa que conecta alimentação, saúde intestinal, imunidade e bem-estar emocional.</p>
+      <a href="#" class="service-link">Saiba mais <span>→</span></a>
+    </div>
+    <div class="service-card" style="border-top: 1px solid rgba(245,240,232,0.06);">
+      <div class="service-number">05</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#7C9070" stroke-width="1.2" stroke-linecap="round">
+          <rect x="6" y="10" width="20" height="14" rx="2"/>
+          <path d="M10 10V8a2 2 0 014 0v2M18 10V8a2 2 0 014 0v2"/>
+          <path d="M11 17h10M16 14v6"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Doenças Crônicas</h3>
+      <p class="service-desc">Manejo nutricional especializado para diabetes, hipertensão, dislipidemia e doenças autoimunes.</p>
+      <a href="#" class="service-link">Saiba mais <span>→</span></a>
+    </div>
+    <div class="service-card" style="border-top: 1px solid rgba(245,240,232,0.06);">
+      <div class="service-number">06</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#7C9070" stroke-width="1.2" stroke-linecap="round">
+          <path d="M4 20c3-3 5-2 8 0s5 3 8 0 5-3 8 0"/>
+          <path d="M4 14c3-3 5-2 8 0s5 3 8 0 5-3 8 0"/>
+          <path d="M4 8c3-3 5-2 8 0s5 3 8 0 5-3 8 0"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Acompanhamento Online</h3>
+      <p class="service-desc">Consultas digitais com o mesmo rigor científico das presenciais. Atendemos todo o Brasil com excelência.</p>
+      <a href="#" class="service-link">Saiba mais <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach" id="metodo">
+  <div class="approach-inner">
+    <div class="approach-header">
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <span class="section-eyebrow-text">O Método</span>
+      </div>
+      <h2 class="section-title">Como<br><em>trabalhamos</em></h2>
+    </div>
+    <div class="approach-steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h3 class="step-title">Avaliação Profunda</h3>
+          <p class="step-text">Análise detalhada do seu histórico clínico, exames laboratoriais, composição corporal e estilo de vida. Entendemos cada detalhe antes de qualquer recomendação.</p>
+        </div>
+        <span class="step-tag">Diagnóstico</span>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h3 class="step-title">Protocolo Individualizado</h3>
+          <p class="step-text">Desenvolvemos um plano nutricional exclusivo, baseado em ciência e calibrado para sua bioquímica individual. Nada genérico, tudo preciso.</p>
+        </div>
+        <span class="step-tag">Estratégia</span>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h3 class="step-title">Implementação Gradual</h3>
+          <p class="step-text">Mudanças sustentáveis acontecem com o tempo. Guiamos cada etapa da sua transformação, adaptando o protocolo conforme seu progresso.</p>
+        </div>
+        <span class="step-tag">Execução</span>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <h3 class="step-title">Monitoramento Contínuo</h3>
+          <p class="step-text">Reavaliações periódicas com ajustes baseados em dados reais. Seu corpo muda, seu protocolo evolui — garantindo resultados duradouros.</p>
+        </div>
+        <span class="step-tag">Evolução</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="depoimentos">
+  <div class="testimonials-header">
+    <div>
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <span class="section-eyebrow-text">Depoimentos</span>
+      </div>
+      <h2 class="section-title">O que dizem<br><em>nossos pacientes</em></h2>
+    </div>
+  </div>
+  <div style="overflow:hidden;">
+    <div class="testimonials-track">
+      <!-- Set 1 -->
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Em 4 meses com o Dr. Bostelman, perdi 18kg sem passar fome nenhuma vez. Ele entende seu corpo de um jeito que nenhum outro profissional entendeu.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">C</div>
+          <div class="author-info">
+            <div class="author-name">Carla Mendes</div>
+            <div class="author-role">Empresária · São Paulo</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Meus exames de diabetes estão controlados pela primeira vez em 8 anos. O protocolo do Dr. Gustavo mudou minha relação com a alimentação completamente.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div class="author-info">
+            <div class="author-name">Roberto Alves</div>
+            <div class="author-role">Engenheiro · Curitiba</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Como atleta, precisava de alguém que entendesse periodização nutricional de verdade. O Dr. Bostelman superou todas as minhas expectativas de performance.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div class="author-info">
+            <div class="author-name">Ana Torres</div>
+            <div class="author-role">Triatleta · Rio de Janeiro</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Depois de anos tentando emagrecer sem sucesso, descobri que o problema era metabólico. O Dr. Gustavo identificou isso na primeira consulta.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div class="author-info">
+            <div class="author-name">Marcos Pinho</div>
+            <div class="author-role">Advogado · Brasília</div>
+          </div>
+        </div>
+      </div>
+      <!-- Duplicated for seamless loop -->
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Em 4 meses com o Dr. Bostelman, perdi 18kg sem passar fome nenhuma vez. Ele entende seu corpo de um jeito que nenhum outro profissional entendeu.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">C</div>
+          <div class="author-info">
+            <div class="author-name">Carla Mendes</div>
+            <div class="author-role">Empresária · São Paulo</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Meus exames de diabetes estão controlados pela primeira vez em 8 anos. O protocolo do Dr. Gustavo mudou minha relação com a alimentação completamente.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div class="author-info">
+            <div class="author-name">Roberto Alves</div>
+            <div class="author-role">Engenheiro · Curitiba</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Como atleta, precisava de alguém que entendesse periodização nutricional de verdade. O Dr. Bostelman superou todas as minhas expectativas de performance.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div class="author-info">
+            <div class="author-name">Ana Torres</div>
+            <div class="author-role">Triatleta · Rio de Janeiro</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Depois de anos tentando emagrecer sem sucesso, descobri que o problema era metabólico. O Dr. Gustavo identificou isso na primeira consulta.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div class="author-info">
+            <div class="author-name">Marcos Pinho</div>
+            <div class="author-role">Advogado · Brasília</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">
+      <div class="cta-eyebrow-line"></div>
+      <span class="cta-eyebrow-text">Sua Transformação Começa Agora</span>
+      <div class="cta-eyebrow-line"></div>
+    </div>
+    <h2 class="cta-title">Pronto para<br><em>mudar sua vida?</em></h2>
+    <p class="cta-sub">Agende uma consulta com o Dr. Gustavo Bostelman e descubra o que a nutrição de precisão pode fazer por você.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/5511992751141" class="btn-primary">
+        <span>Agendar via WhatsApp</span>
+        <span>→</span>
+      </a>
+      <a href="mailto:contato@drbostelman.com.br" class="btn-ghost">
+        Enviar e-mail
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dr. <span>Bostelman</span></div>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">LinkedIn</a></li>
+    <li><a href="#">Política de Privacidade</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Dr. Gustavo Bostelman · CRN-3 00000</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursorRing.style.left = rx - 18 + 'px';
+    cursorRing.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2.5)');
+    el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+  });
+
+  // Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Stagger children
+        entry.target.querySelectorAll('.stat-item, .service-card, .step').forEach((el, i) => {
+          el.style.transitionDelay = i * 0.12 + 's';
+          el.classList.add('visible');
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.stat-item, .service-card, .step, .stats-strip, .services-grid, .approach-steps').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
